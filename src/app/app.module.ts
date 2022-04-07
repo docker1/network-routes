@@ -7,9 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotFoundComponent } from './global/not-found/not-found.component';
 import { MenuComponent } from './global/menu/menu.component';
 
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [AppComponent, NotFoundComponent, MenuComponent],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
