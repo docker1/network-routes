@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RoutesListComponent } from './routes-list.component';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [RoutesListComponent],
@@ -16,6 +17,7 @@ import { MatTableModule } from '@angular/material/table';
       },
     ]),
     MatTableModule,
+    MatSortModule,
   ],
 })
 export class RoutesListModule {}

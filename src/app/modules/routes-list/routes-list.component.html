@@ -1,7 +1,18 @@
 <div class="routes-list">
-  <table class="routes-list__table" mat-table [dataSource]="routes$">
+  <table
+    matSort
+    (matSortChange)="sortData($event)"
+    class="routes-list__table"
+    mat-table
+    [dataSource]="sortedRoutes$"
+  >
     <ng-container matColumnDef="address">
-      <th class="routes-list__table_header" mat-header-cell *matHeaderCellDef>
+      <th
+        class="routes-list__table_header"
+        mat-header-cell
+        mat-sort-header
+        *matHeaderCellDef
+      >
         Адрес назначения
       </th>
       <td class="routes-list__table_row_cell" mat-cell *matCellDef="let item">
@@ -10,7 +21,12 @@
     </ng-container>
 
     <ng-container matColumnDef="gateway">
-      <th class="routes-list__table_header" mat-header-cell *matHeaderCellDef>
+      <th
+        class="routes-list__table_header"
+        mat-header-cell
+        mat-sort-header
+        *matHeaderCellDef
+      >
         Шлюз
       </th>
       <td class="routes-list__table_row_cell" mat-cell *matCellDef="let item">
@@ -22,6 +38,7 @@
       <th
         class="routes-list__table_header_cell"
         mat-header-cell
+        mat-sort-header
         *matHeaderCellDef
       >
         Интерфейс
