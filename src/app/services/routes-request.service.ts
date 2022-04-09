@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { IRoute } from '../models/route.model';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { IRoutesResponse } from '../models/routes-response.model';
 
 @Injectable({
@@ -14,6 +14,15 @@ export class RoutesRequestService {
   getAllRoutes(): Observable<IRoute[]> {
     return this.http
       .get<IRoutesResponse>('http://localhost:3333/api/routes')
-      .pipe(map((response: IRoutesResponse) => response.payload.routes));
+      .pipe(
+        map((response: IRoutesResponse) => <IRoute[]>response.payload.routes)
+      );
+  }
+
+  saveRoute(route: IRoute): Observable<IRoutesResponse> {
+    return this.http.post<IRoutesResponse>(
+      'http://localhost:3333/api/routes',
+      route
+    );
   }
 }

@@ -1,1 +1,13 @@
-<p>routes-creator works!</p>
+<ng-container *ngIf="response$ | async as response">
+  <div
+    [ngClass]="{
+      alert: true,
+      'alert-success': response.successful,
+      'alert-danger': !response.successful
+    }"
+  >
+    {{ response.message }}
+  </div>
+</ng-container>
+
+<app-route-form (submit)="onSubmit($event)"></app-route-form>

@@ -4,7 +4,5 @@ export interface IRoutesResponse {
   message: string;
   code: string;
   successful: boolean;
-  payload: {
-    routes: IRoute[];
-  };
+  payload: Record<string, unknown>;
 }

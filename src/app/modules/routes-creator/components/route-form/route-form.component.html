@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="col-12 mb-3">
+    <h2>Параметры статического маршрута</h2>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <form [formGroup]="routeForm" (ngSubmit)="onSubmit($event)">
+        <mat-form-field class="col-12 mb-3" appearance="fill">
+          <mat-label>Адрес сети назначения</mat-label>
+          <input matInput type="text" formControlName="address" />
+          <mat-error *ngIf="addressControl.invalid">{{
+            getErrorMessage(addressControl)
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-12 mb-3" appearance="fill">
+          <mat-label>Маска подсети</mat-label>
+          <mat-select formControlName="mask">
+            <mat-option *ngFor="let mask of masks" [value]="mask">
+              {{ mask }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="maskControl.invalid">{{
+            getErrorMessage(maskControl)
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-12 mb-3" appearance="fill">
+          <mat-label>Адрес шлюза</mat-label>
+          <input matInput type="text" formControlName="gateway" />
+          <mat-error *ngIf="gatewayControl.invalid">{{
+            getErrorMessage(gatewayControl)
+          }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="col-12 mb-3" appearance="fill">
+          <mat-label>Интерфейс</mat-label>
+          <mat-select formControlName="interface">
+            <mat-option
+              *ngFor="let interface of interfaces"
+              [value]="interface"
+            >
+              {{ interface }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="interfaceControl.invalid">{{
+            getErrorMessage(interfaceControl)
+          }}</mat-error>
+        </mat-form-field>
+
+        <button
+          class="col-2 mx-3 justify-content-center"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!routeForm.valid"
+        >
+          {{ destination === "create" ? "Создать" : "Удалить" }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

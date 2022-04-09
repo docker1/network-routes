@@ -1,5 +1,5 @@
 export interface IRoute {
-  uuid: string;
+  uuid?: string;
   address: string;
   mask: string;
   gateway: string;

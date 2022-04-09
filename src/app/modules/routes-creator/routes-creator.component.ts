@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IRoute } from 'src/app/models/route.model';
+import { IRoutesResponse } from 'src/app/models/routes-response.model';
+import { RoutesRequestService } from 'src/app/services/routes-request.service';
 
 @Component({
   selector: 'app-routes-creator',
   templateUrl: './routes-creator.component.html',
-  styleUrls: ['./routes-creator.component.scss']
+  styleUrls: ['./routes-creator.component.scss'],
 })
-export class RoutesCreatorComponent implements OnInit {
+export class RoutesCreatorComponent {
+  response$!: Observable<IRoutesResponse>;
 
-  constructor() { }
+  constructor(private routesRequestService: RoutesRequestService) {}
 
-  ngOnInit(): void {
+  onSubmit(route: IRoute) {
+    this.response$ = this.routesRequestService.saveRoute(route);
   }
-
 }
