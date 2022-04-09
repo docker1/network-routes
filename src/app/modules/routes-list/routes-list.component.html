@@ -1,1 +1,45 @@
-<p>routes-list works!</p>
+<div class="routes-list">
+  <table class="routes-list__table" mat-table [dataSource]="routes$">
+    <ng-container matColumnDef="address">
+      <th class="routes-list__table_header" mat-header-cell *matHeaderCellDef>
+        Адрес назначения
+      </th>
+      <td class="routes-list__table_row_cell" mat-cell *matCellDef="let item">
+        {{ item.address }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="gateway">
+      <th class="routes-list__table_header" mat-header-cell *matHeaderCellDef>
+        Шлюз
+      </th>
+      <td class="routes-list__table_row_cell" mat-cell *matCellDef="let item">
+        {{ item.gateway }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="interface">
+      <th
+        class="routes-list__table_header_cell"
+        mat-header-cell
+        *matHeaderCellDef
+      >
+        Интерфейс
+      </th>
+      <td class="routes-list__table_row_cell" mat-cell *matCellDef="let item">
+        {{ item.interface }}
+      </td>
+    </ng-container>
+
+    <tr
+      class="routes-list__table_header"
+      mat-header-row
+      *matHeaderRowDef="columns"
+    ></tr>
+    <tr
+      class="routes-list__table_row"
+      mat-row
+      *matRowDef="let row; columns: columns"
+    ></tr>
+  </table>
+</div>
