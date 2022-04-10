@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, EMPTY, throwError } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, Subscription, throwError } from 'rxjs';
+import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import { IRoute } from 'src/app/models/route.model';
 import { RoutesRequestService } from 'src/app/services/routes-request.service';
 import { RouteFormComponent } from '../routes-creator/components/route-form/route-form.component';
@@ -19,6 +19,7 @@ export class RoutesListComponent implements OnInit {
   routes$ = new BehaviorSubject<IRoute[]>([]);
   sortedRoutes$ = new BehaviorSubject<IRoute[]>([]);
   columns: string[] = ['address', 'gateway', 'interface'];
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private routesRequestService: RoutesRequestService,
@@ -34,6 +35,7 @@ export class RoutesListComponent implements OnInit {
     this.routesRequestService
       .getAllRoutes()
       .pipe(
+        first(),
         tap((routes) => {
           this.routes$.next(routes);
           this.sortedRoutes$.next(routes);
@@ -76,6 +78,7 @@ export class RoutesListComponent implements OnInit {
       })
       .afterClosed()
       .pipe(
+        first(),
         switchMap(
           (dialogResult: { result: RouteDialogResult; data: IRoute }) => {
             switch (dialogResult?.result) {
