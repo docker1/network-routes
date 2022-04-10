@@ -32,6 +32,8 @@ export class RouteFormComponent implements OnInit {
     '255.0.0.0',
     '255.255.0.0',
     '255.255.255.0',
+    '255.255.255.192',
+    '255.255.255.240',
     '255.255.255.255',
   ];
   interfaces = ['ISP', 'Guest', 'Home', 'VPN'];
