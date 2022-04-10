@@ -27,6 +27,10 @@ export class RoutesListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getRoutes();
+  }
+
+  private getRoutes(): void {
     this.routesRequestService
       .getAllRoutes()
       .pipe(
@@ -96,6 +100,7 @@ export class RoutesListComponent implements OnInit {
         }),
         tap((response: IRoutesResponse) => {
           this.snackBar.open(response.message, undefined, { duration: 3000 });
+          this.getRoutes();
         })
       )
       .subscribe();
