@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { throwError } from 'rxjs';
+import { catchError, first, tap } from 'rxjs/operators';
 import { IRoute } from 'src/app/models/route.model';
-import { IRoutesResponse } from 'src/app/models/routes-response.model';
 import { RoutesRequestService } from 'src/app/services/routes-request.service';
 
 @Component({
@@ -10,11 +11,28 @@ import { RoutesRequestService } from 'src/app/services/routes-request.service';
   styleUrls: ['./routes-creator.component.scss'],
 })
 export class RoutesCreatorComponent {
-  response$!: Observable<IRoutesResponse>;
-
-  constructor(private routesRequestService: RoutesRequestService) {}
+  constructor(
+    private routesRequestService: RoutesRequestService,
+    private snackBar: MatSnackBar
+  ) {}
 
   onSubmit(route: IRoute) {
-    this.response$ = this.routesRequestService.saveRoute(route);
+    this.routesRequestService
+      .saveRoute(route)
+      .pipe(
+        first(),
+        catchError((err) => {
+          this.openSnackBar(err.message);
+          return throwError(err);
+        }),
+        tap((response) => {
+          this.openSnackBar(response.message);
+        })
+      )
+      .subscribe();
+  }
+
+  private openSnackBar(message: string) {
+    this.snackBar.open(message, undefined, { duration: 3000 });
   }
 }

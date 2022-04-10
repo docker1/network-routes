@@ -19,7 +19,6 @@ export class RoutesListComponent implements OnInit {
   routes$ = new BehaviorSubject<IRoute[]>([]);
   sortedRoutes$ = new BehaviorSubject<IRoute[]>([]);
   columns: string[] = ['address', 'gateway', 'interface'];
-  private subscriptions: Subscription[] = [];
 
   constructor(
     private routesRequestService: RoutesRequestService,
@@ -98,11 +97,11 @@ export class RoutesListComponent implements OnInit {
           }
         ),
         catchError((err) => {
-          this.snackBar.open(err.message, undefined, { duration: 3000 });
+          this.openSnackBar(err.message);
           return throwError(err);
         }),
         tap((response: IRoutesResponse) => {
-          this.snackBar.open(response.message, undefined, { duration: 3000 });
+          this.openSnackBar(response.message);
           this.getRoutes();
         })
       )
@@ -128,5 +127,9 @@ export class RoutesListComponent implements OnInit {
     }
 
     return 0;
+  }
+
+  private openSnackBar(message: string) {
+    this.snackBar.open(message, undefined, { duration: 3000 });
   }
 }
