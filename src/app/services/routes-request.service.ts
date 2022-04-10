@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IRoute } from '../models/route.model';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IRoutesResponse } from '../models/routes-response.model';
 
 @Injectable({
@@ -23,6 +23,19 @@ export class RoutesRequestService {
     return this.http.post<IRoutesResponse>(
       'http://localhost:3333/api/routes',
       route
+    );
+  }
+
+  editRoute(route: IRoute, uuid: string): Observable<IRoutesResponse> {
+    return this.http.put<IRoutesResponse>(
+      `http://localhost:3333/api/routes/${uuid}`,
+      route
+    );
+  }
+
+  deleteRoute(uuid: string): Observable<IRoutesResponse> {
+    return this.http.delete<IRoutesResponse>(
+      `http://localhost:3333/api/routes/${uuid}`
     );
   }
 }

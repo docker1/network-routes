@@ -57,6 +57,7 @@
       class="routes-list__table_row"
       mat-row
       *matRowDef="let row; columns: columns"
+      (click)="onRowClick(row)"
     ></tr>
   </table>
 </div>

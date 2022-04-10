@@ -2,7 +2,7 @@
   <div class="col-12 mb-3">
     <h2>Параметры статического маршрута</h2>
   </div>
-  <div class="col-12">
+  <div class="col-12 mb-3">
     <div class="row">
       <form [formGroup]="routeForm" (ngSubmit)="onSubmit($event)">
         <mat-form-field class="col-12 mb-3" appearance="fill">
@@ -33,7 +33,7 @@
           }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="col-12 mb-3" appearance="fill">
+        <mat-form-field class="col-12" appearance="fill">
           <mat-label>Интерфейс</mat-label>
           <mat-select formControlName="interface">
             <mat-option
@@ -49,15 +49,44 @@
         </mat-form-field>
 
         <button
+          *ngIf="destination === 'create'"
           class="col-2 mx-3 justify-content-center"
           mat-raised-button
           color="primary"
           type="submit"
           [disabled]="!routeForm.valid"
         >
-          {{ destination === "create" ? "Создать" : "Удалить" }}
+          Создать
+        </button>
+
+        <button
+          *ngIf="destination === 'edit'"
+          class="col-2 mx-3 justify-content-center"
+          mat-raised-button
+          color="warn"
+          type="button"
+          [disabled]="!routeForm.valid"
+          (click)="onRemoveButtonClick()"
+        >
+          Удалить
         </button>
       </form>
+    </div>
+  </div>
+
+  <div *ngIf="data" class="col-12">
+    <div mat-dialog-actions>
+      <button
+        class="col-2 mr-3"
+        mat-raised-button
+        color="primary"
+        (click)="onEditButtonClick()"
+      >
+        Сохранить
+      </button>
+      <button class="col-2" mat-raised-button (click)="onCancelButtonClick()">
+        Отмена
+      </button>
     </div>
   </div>
 </div>

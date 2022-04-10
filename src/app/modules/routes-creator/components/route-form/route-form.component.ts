@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,6 +14,8 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RouteDialogResult } from 'src/app/models/route-dialog-result.enum';
 import { IRoute } from 'src/app/models/route.model';
 
 @Component({
@@ -15,8 +24,8 @@ import { IRoute } from 'src/app/models/route.model';
   styleUrls: ['./route-form.component.scss'],
 })
 export class RouteFormComponent implements OnInit {
-  @Input() destination: 'create' | 'remove' = 'create';
   @Output() submit = new EventEmitter<IRoute>();
+  destination: 'create' | 'edit' = 'create';
   routeForm!: FormGroup;
   masks = [
     '0.0.0.0',
@@ -43,7 +52,13 @@ export class RouteFormComponent implements OnInit {
     return this.routeForm?.controls.interface;
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    @Optional()
+    @Inject(MAT_DIALOG_DATA)
+    public data: { route: IRoute; destination: 'create' | 'edit' },
+    @Optional() private dialogRef: MatDialogRef<RouteFormComponent>
+  ) {}
 
   ngOnInit(): void {
     this.routeForm = this.fb.group({
@@ -52,11 +67,38 @@ export class RouteFormComponent implements OnInit {
       gateway: [null, [Validators.required, this.ipValidator()]],
       interface: [null, Validators.required],
     });
+
+    if (this.data) {
+      const { route, destination } = this.data;
+      this.destination = destination;
+      this.routeForm.patchValue({
+        address: route.address,
+        mask: route.mask,
+        gateway: route.gateway,
+        interface: route.interface,
+      });
+      this.routeForm.updateValueAndValidity();
+    }
   }
 
   onSubmit(event: Event): void {
     event.stopPropagation();
     this.submit.emit(this.routeForm.value);
+  }
+
+  onRemoveButtonClick(): void {
+    this.dialogRef.close({ result: RouteDialogResult.Remove });
+  }
+
+  onEditButtonClick(): void {
+    this.dialogRef.close({
+      result: RouteDialogResult.Edit,
+      data: this.routeForm.value,
+    });
+  }
+
+  onCancelButtonClick(): void {
+    this.dialogRef.close({ result: RouteDialogResult.Cancel });
   }
 
   getErrorMessage(control: AbstractControl): string {

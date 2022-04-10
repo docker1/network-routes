@@ -4,6 +4,9 @@ import { RoutesListComponent } from './routes-list.component';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [RoutesListComponent],
@@ -18,6 +21,9 @@ import { MatSortModule } from '@angular/material/sort';
     ]),
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
   ],
 })
 export class RoutesListModule {}
