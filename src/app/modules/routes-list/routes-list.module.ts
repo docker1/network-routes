@@ -7,9 +7,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IpWithShortenMaskPipe } from './pipes/ip-with-shorten-mask.pipe';
 
 @NgModule({
-  declarations: [RoutesListComponent],
+  declarations: [RoutesListComponent, IpWithShortenMaskPipe],
   imports: [
     CommonModule,
     RouterModule.forChild([

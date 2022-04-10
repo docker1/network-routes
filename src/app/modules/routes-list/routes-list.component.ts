@@ -31,13 +31,6 @@ export class RoutesListComponent implements OnInit {
       .getAllRoutes()
       .pipe(
         tap((routes) => {
-          routes.forEach((route) => {
-            const mask = route.mask.split('.').reduce((prev, current) => {
-              return prev + ((+current).toString(2).match(/1/g) || []).length;
-            }, 0);
-            route.address = `${route.address}/${mask}`;
-          });
-
           this.routes$.next(routes);
           this.sortedRoutes$.next(routes);
         })
@@ -55,10 +48,12 @@ export class RoutesListComponent implements OnInit {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'address':
+          if (a.address === b.address) {
+            return this.compareIPs(a.mask, b.mask, isAsc);
+          }
           return this.compareIPs(a.address, b.address, isAsc);
-        case 'gateway': {
+        case 'gateway':
           return this.compareIPs(a.gateway, b.gateway, isAsc);
-        }
         case 'interface':
           return this.compare(a.interface, b.interface, isAsc);
         default:

@@ -16,7 +16,7 @@
         Адрес назначения
       </th>
       <td class="routes-list__table_row_cell" mat-cell *matCellDef="let item">
-        {{ item.address }}
+        {{ item.address | ipWithShortenMask: item.mask }}
       </td>
     </ng-container>
 
