@@ -117,8 +117,8 @@ export class RoutesListComponent implements OnInit {
   }
 
   private compareIPs(a: string, b: string, isAsc: boolean): number {
-    const aParts = a.split(/\.|\//g);
-    const bParts = b.split(/\.|\//g);
+    const aParts = a.split('.');
+    const bParts = b.split('.');
 
     for (let i = 0; i < aParts.length; i++) {
       if (aParts[i] !== bParts[i]) {
